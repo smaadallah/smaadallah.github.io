@@ -1,1 +1,26 @@
+remote_theme: "mmistakes/minimal-mistakes@4.27.3"
+   plugins:
+     - jekyll-include-cache
 
+   minimal_mistakes_skin: "default"
+
+   title: "Samira Maadallah"
+   name: "Samira Maadallah"
+   description: "AI Builder — production software, shipped end-to-end."
+   locale: "en-US"
+
+   author:
+     name: "Samira Maadallah"
+     bio: "AI Builder. Ships production software end-to-end by orchestrating AI development tools."
+     location: "Florida, USA"
+
+   include:
+     - _pages
+
+   defaults:
+     - scope:
+         path: ""
+         type: pages
+       values:
+         layout: single
+         author_profile: true
