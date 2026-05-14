@@ -1,119 +1,80 @@
-# VRM Agent
+---
+layout: single
+title: VRM Agent
+author_profile: true
+permalink: /vrm-agent/
+---
 
-**An AI-powered operational assistant for vacation rental property managers.**
+**A production-grade AI SaaS for vacation rental operations — designed, built, and tested solo in three weeks.**
 
-This is the public portfolio repository for VRM Agent — the backend of an AI-driven SaaS that autonomously handles guest communication, cleaning coordination, and maintenance intake across Airbnb, VRBO, and direct bookings. It replaces the four to six disconnected tools a property manager juggles today. **Built solo in three weeks, testing included.**
+> **In brief:** I built the backend of VRM Agent — an AI-powered operations assistant for vacation rental managers — working solo and spec-first. At build close: 849 automated tests, 40 of 40 end-to-end integration checks, zero failures. This case study is about *how* it was built, because the method is what I bring to client work.
 
 ---
 
-## System overview
+## The problem
 
-```mermaid
-flowchart LR
-    Users["Managers · Guests · Cleaners"]
-    Platforms["Booking Platforms<br/>Airbnb · VRBO · Hostaway"]
+A professional vacation rental manager handling 10 to 75 properties runs their operation across four to six disconnected tools — one for guest messaging, another for cleaning schedules, a third for maintenance, a fourth for reviews. None of them talk to each other.
 
-    subgraph VRM["VRM Agent"]
-        Frontend["Next.js<br/>Frontend"]
-        Backend["Express Backend<br/>+ Job Queue"]
-        DB[("PostgreSQL")]
-        Frontend --> Backend
-        Backend --> DB
-    end
+The cost of that fragmentation is missed catches. A guest question at 11pm that doesn't get answered until morning. A cleaner who never confirmed the turnover. A maintenance issue buried in a text thread until the next guest finds it. Each miss is a refund, a bad review, or a lost rebooking.
 
-    AI["Anthropic API<br/>Claude Sonnet 4"]
-    Comms["Twilio · SendGrid"]
+VRM Agent replaces that stack with one system: 24/7 AI guest communication, automated cleaning coordination, and structured maintenance intake — working across Airbnb, VRBO, and direct bookings, run from a single dashboard.
 
-    Users --> Frontend
-    Users <--> Comms
-    Platforms <--> Backend
-    Backend <--> AI
-    Backend <--> Comms
-```
+It's my own product, currently pre-launch. I'm presenting it here as a case study rather than a live demo, because what's relevant to the work I do for clients is the engineering method behind it.
 
----
+## What I set out to build
 
-## Project status
+The MVP scope was three operational pillars, each fully automated:
 
-Pre-launch. Backend complete and tested. Frontend complete but held in a private repository. Integration layer paused during migration from Airbnb's discontinued public API to Hostaway.
+- **Guest communication** — AI handles inbound guest messages day and night, with urgent issues escalated to the manager and maintenance requests routed into the work-order system automatically.
+- **Cleaning coordination** — checkout detection triggers cleaner dispatch by SMS, with checklist delivery, completion tracking, and no-response escalation handled without manager involvement.
+- **Maintenance intake** — issues are classified by priority, turned into structured work orders, and surfaced to the manager at the right urgency tier.
 
----
+The target was never "a working demo." It was production-grade architecture: multi-tenant from day one, secure, and built to scale to SaaS.
 
-## What this repository contains
+## How I built it — spec-first, AI-orchestrated
 
-This is the **backend** of VRM Agent, published as a portfolio artifact. It is production-grade architecture, originally built for a single-manager MVP designed to scale to multi-tenant SaaS.
+I don't hand-write code. I architect systems, write detailed specifications, and orchestrate AI development tools to build against them. The discipline lives in the specification, not the typing.
 
-**In this repository:**
-- Full backend source (`src/`) — API routes, scheduled jobs, middleware, encryption layer, external integrations
-- Database schema and migrations (`prisma/`) — PostgreSQL on Supabase
-- Three planning documents — `PRD.md`, `ARCHITECTURE.md`, `TICKETS.md`
-- Pre-launch QA report (`QA_REPORT.pdf`) — 849 automated tests across backend and frontend, 40/40 end-to-end integration assertions, zero failures
+For VRM Agent that meant writing three things *before* any code existed:
 
-**Deliberately held back:**
-- Frontend (Next.js / React) — held until the integration layer is unpaused so dashboards reflect real data
-- Screens specification document — held alongside the frontend
-- Environment secrets — never published; variable structure is shown in `.env.example`
+- a **product requirements document** defining every feature and its behavior,
+- an **architecture document** locking in the technical decisions — multi-tenancy, encryption, webhook security, the job queue — and the reasoning behind each,
+- and **62 atomic implementation tickets**, each with explicit acceptance criteria.
 
----
+Those documents aren't write-ups produced after the fact. They're the actual artifacts the build ran on, and they're published in the repository. The AI builds; the specification governs what "correct" means; my testing background verifies it against that standard.
 
-## Tech stack
+That's the part that transfers to client work. The method is repeatable. It doesn't depend on the vacation rental domain — it depends on knowing how to decompose a product into specifications precise enough to build from, and how to verify the result.
 
-| Layer | Technology | Hosting |
-|---|---|---|
-| Backend runtime | Node.js + Express + TypeScript | Railway |
-| Frontend (private) | Next.js + React + TypeScript | Vercel |
-| Database | PostgreSQL with Row Level Security | Supabase |
-| ORM | Prisma | — |
-| Job queue | pg-boss (Postgres-native) | Co-located with database |
-| AI model | Claude Sonnet 4 via Anthropic API | — |
-| SMS | Twilio | — |
-| Email | SendGrid | — |
-| Authentication | JWT in HTTP-only cookies; OAuth 2.0 for booking platforms | — |
-| Encryption | AES-256-GCM, application-layer, on sensitive columns | — |
-| Observability | Sentry (errors); Pino + Logtail (structured logs) | — |
+## The judgment call
 
----
+Partway through the build, I hit a wall that wasn't in the plan: Airbnb's public API is closed to new developers. The integration path I'd architected couldn't be opened.
 
-## Build approach
+The options were to dead-end the integration layer or to re-route it. I researched the alternatives and made the call to pivot to Hostaway — a channel manager that provides the connectivity Airbnb's direct API no longer offers new entrants. The core product didn't change; the integration strategy did.
 
-VRM Agent was built by orchestrating AI-driven development tools against detailed specifications, architectural decisions, and atomic implementation tickets. The `PRD.md`, `ARCHITECTURE.md`, and `TICKETS.md` files in this repository are the actual planning artifacts used during the build — spec-first methodology, not documentation written after the fact.
+I'm including this deliberately. Building software to spec is table stakes. The harder, more valuable skill is recognizing when a plan has hit a real constraint and changing course without losing the project — and that's a judgment call clients are actually paying for.
 
----
+## What it proves
 
-## Repository structure and where to start reading
+At Sprint 4 build close, verified in a formal QA report:
 
-```
-vrm-agent-backend/
-├── ARCHITECTURE.md         Technical design and infrastructure decisions
-├── PRD.md                  Product requirements and feature specifications
-├── TICKETS.md              62 implementation tickets with acceptance criteria
-├── QA_REPORT.pdf           Pre-launch QA report — 849 tests, 40/40 E2E, 0 failures
-├── .env.example            Environment variable structure (values stripped)
-├── .gitignore
-├── jest.config.ts
-├── package.json
-├── package-lock.json
-├── tsconfig.json
-├── prisma/                 Database schema and migrations
-└── src/                    Backend source code and tests
-```
+- **849 automated tests, zero failures** — 409 backend, 440 frontend.
+- **40 of 40 end-to-end integration assertions passing** — the complete operational lifecycle, from booking webhook through cleaning dispatch to review-draft generation, tested as one run.
+- **62 tickets delivered across 4 sprints**, every one accepted against its acceptance criteria.
 
-**For a fast read (about 10 minutes):**
-1. `PRD.md` Section 1 — what the product is and why
-2. `ARCHITECTURE.md` Section 1 — the tech stack decisions and rationale
-3. A sample ticket from `TICKETS.md` (T-001 for project setup; T-049 for a feature ticket) — see how features were scoped
-4. `QA_REPORT.pdf` — Sections 1, 3, and 8 — the executive summary, test results, and sign-off
+The numbers matter less as a scoreboard than as evidence of *how* the work was done: planned, decomposed, tested, and verified — not assembled and hoped over. That discipline comes from six years in QA engineering and test automation, including leading a 15-person end-to-end testing team. I build the way I used to test.
 
-**For a thorough read:** all four documents in the order above, then the source code starting with `src/index.ts`.
+## See the work
 
----
+The full backend, the planning documents, and the QA report are public:
 
-## About the builder
+[**github.com/smaadallah/vrm-agent-backend**](https://github.com/smaadallah/vrm-agent-backend)
 
-Built by **Samira Maadallah** — freelance AI Builder based in Florida, US. Six years in QA engineering and test automation; ISTQB-certified; previously led a 15-person end-to-end testing team at ATOS for La Poste Group. Builds production software end-to-end by combining systems architecture, spec discipline, and AI-orchestrated development.
+The README is the fastest orientation. The PRD, architecture document, and tickets show the spec-first method in practice. The QA report covers the full test results and sign-off.
 
-**Profile:** [Freelancer.com/u/samiramaad](https://www.freelancer.com/u/samiramaad)
+## Get in touch
 
----
+I'm available for freelance AI build work — taking products from specification to tested, production-grade software.
 
-© 2026 Samira Maadallah. Published for portfolio review only; not licensed for reuse or redistribution.
+- **Email** — [samira.maadallah@gmail.com](mailto:samira.maadallah@gmail.com)
+- **LinkedIn** — [linkedin.com/in/samira-maad-allah](https://www.linkedin.com/in/samira-maad-allah-921015207/)
+- **Freelancer.com** — [freelancer.com/u/samiramaad](https://www.freelancer.com/u/samiramaad)
