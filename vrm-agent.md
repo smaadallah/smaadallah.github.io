@@ -31,6 +31,8 @@ The MVP scope was three operational pillars, each fully automated:
 
 The target was never "a working demo." It was production-grade architecture: multi-tenant from day one, secure, and built to scale to SaaS.
 
+![VRM Agent system architecture](/vrm-agent-diagram.svg)
+
 ## How I built it — spec-first, AI-orchestrated
 
 I don't hand-write code. I architect systems, write detailed specifications, and orchestrate AI development tools to build against them. The discipline lives in the specification, not the typing.
