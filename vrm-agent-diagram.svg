@@ -1,0 +1,76 @@
+<svg width="100%" viewBox="0 0 680 340" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>VRM Agent system architecture</title>
+<desc>Left-to-right diagram showing Users and Booking Platforms connecting to the VRM Agent system (Next.js frontend, Express backend, PostgreSQL), which connects to Anthropic API and Twilio/SendGrid communications.</desc>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+<style>
+text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+.label-main { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+.label-sub  { font-size: 12px; font-weight: 400; fill: #555555; }
+.label-container { font-size: 13px; font-weight: 600; fill: #0f6e56; }
+</style>
+</defs>
+
+<!-- VRM Agent container -->
+<rect x="220" y="30" width="260" height="280" rx="14" fill="#e1f5ee" stroke="#0f6e56" stroke-width="1" stroke-dasharray="6 3"/>
+<text class="label-container" x="350" y="54" text-anchor="middle">VRM Agent</text>
+
+<!-- Frontend box -->
+<rect x="238" y="68" width="100" height="56" rx="6" fill="#9fe1cb" stroke="#0f6e56" stroke-width="0.8"/>
+<text class="label-main" x="288" y="91" text-anchor="middle" dominant-baseline="central">Next.js</text>
+<text class="label-sub"  x="288" y="110" text-anchor="middle" dominant-baseline="central">Frontend</text>
+
+<!-- Backend box -->
+<rect x="238" y="158" width="100" height="56" rx="6" fill="#9fe1cb" stroke="#0f6e56" stroke-width="0.8"/>
+<text class="label-main" x="288" y="178" text-anchor="middle" dominant-baseline="central">Express</text>
+<text class="label-sub"  x="288" y="196" text-anchor="middle" dominant-baseline="central">Backend + queue</text>
+
+<!-- DB box -->
+<rect x="362" y="158" width="100" height="56" rx="6" fill="#d3d1c7" stroke="#5f5e5a" stroke-width="0.8"/>
+<text class="label-main" x="412" y="178" text-anchor="middle" dominant-baseline="central">PostgreSQL</text>
+<text class="label-sub"  x="412" y="196" text-anchor="middle" dominant-baseline="central">Database</text>
+
+<!-- Frontend → Backend -->
+<line x1="288" y1="124" x2="288" y2="156" stroke="#0f6e56" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+<!-- Backend → DB -->
+<line x1="338" y1="186" x2="360" y2="186" stroke="#5f5e5a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+<!-- Users box -->
+<rect x="20" y="68" width="150" height="56" rx="6" fill="#cecbf6" stroke="#534ab7" stroke-width="0.8"/>
+<text class="label-main" x="95" y="91" text-anchor="middle" dominant-baseline="central">Users</text>
+<text class="label-sub"  x="95" y="110" text-anchor="middle" dominant-baseline="central">Managers · Guests · Cleaners</text>
+
+<!-- Platforms box -->
+<rect x="20" y="188" width="150" height="56" rx="6" fill="#cecbf6" stroke="#534ab7" stroke-width="0.8"/>
+<text class="label-main" x="95" y="207" text-anchor="middle" dominant-baseline="central">Booking platforms</text>
+<text class="label-sub"  x="95" y="225" text-anchor="middle" dominant-baseline="central">Airbnb · VRBO · Hostaway</text>
+
+<!-- AI box -->
+<rect x="510" y="68" width="150" height="56" rx="6" fill="#fac775" stroke="#854f0b" stroke-width="0.8"/>
+<text class="label-main" x="585" y="91" text-anchor="middle" dominant-baseline="central">Anthropic API</text>
+<text class="label-sub"  x="585" y="110" text-anchor="middle" dominant-baseline="central">Claude Sonnet 4</text>
+
+<!-- Comms box -->
+<rect x="510" y="188" width="150" height="56" rx="6" fill="#f5c4b3" stroke="#993c1d" stroke-width="0.8"/>
+<text class="label-main" x="585" y="207" text-anchor="middle" dominant-baseline="central">Communications</text>
+<text class="label-sub"  x="585" y="225" text-anchor="middle" dominant-baseline="central">Twilio · SendGrid</text>
+
+<!-- Users → Frontend -->
+<line x1="170" y1="96" x2="236" y2="96" stroke="#534ab7" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+<!-- Users ↔ Comms -->
+<path d="M95 124 Q95 270 510 216" fill="none" stroke="#888780" stroke-width="1" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+
+<!-- Platforms ↔ Backend -->
+<line x1="170" y1="208" x2="236" y2="192" fill="none" stroke="#534ab7" stroke-width="1.2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+
+<!-- Backend ↔ AI -->
+<line x1="338" y1="172" x2="508" y2="100" fill="none" stroke="#854f0b" stroke-width="1.2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+
+<!-- Backend ↔ Comms -->
+<line x1="338" y1="198" x2="508" y2="214" fill="none" stroke="#993c1d" stroke-width="1.2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+
+</svg>
