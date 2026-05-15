@@ -13,7 +13,7 @@ My background is six years in QA engineering and test automation, including lead
 
 ## Case studies
 
-**VRM Agent** — An AI-powered operational assistant for vacation rental property managers. Built solo in three weeks, testing included: 849 automated tests, zero failures. *Full case study coming soon.*
+**VRM Agent** — An AI-powered operational assistant for vacation rental property managers. Built solo in three weeks, testing included: 849 automated tests, zero failures. [Read the full case study →](/vrm-agent/)
 
 ## Get in touch
 
