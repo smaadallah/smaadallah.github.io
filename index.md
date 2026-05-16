@@ -3,8 +3,6 @@ layout: single
 title: Samira Maadallah
 author_profile: true
 permalink: /
-header:
-  image: /header-bg.png
 ---
 
 # AI Builder
