@@ -3,8 +3,6 @@ layout: single
 title: VRM Agent
 author_profile: true
 permalink: /vrm-agent/
-header:
-  image: /header-bg.png
 ---
 
 **A production-grade AI SaaS for vacation rental operations — designed, built, and tested solo in three weeks.**
