@@ -9,7 +9,7 @@ permalink: /
 
 I build and ship production software end-to-end by orchestrating AI development tools — combining systems architecture, specification discipline, and rigorous QA.
 
-My background is six years in QA engineering and test automation, including leading a 15-person end-to-end testing team across enterprise programmes in France and Morocco. I bring that same testing discipline to everything I build.
+My background is seven years in QA engineering and test automation, including leading a 15-person end-to-end testing team across enterprise programmes in France and Morocco. I bring that same testing discipline to everything I build.
 
 ## AI builds
 
